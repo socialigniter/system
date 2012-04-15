@@ -4,22 +4,10 @@
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
- * NOTICE OF LICENSE
- * 
- * Licensed under the Open Software License version 3.0
- * 
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world wide web, please send an email to
- * licensing@ellislab.com so we can send you a copy immediately.
- *
  * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc. (http://ellislab.com/)
- * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @author		ExpressionEngine Dev Team
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
@@ -33,7 +21,7 @@
  * @package		CodeIgniter
  * @subpackage	Helpers
  * @category	Helpers
- * @author		EllisLab Dev Team
+ * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/url_helper.html
  */
 
@@ -524,7 +512,7 @@ if ( ! function_exists('url_title'))
 			$str = strtolower($str);
 		}
 
-		return trim(trim(stripslashes($str)), $replace);
+		return trim(stripslashes($str));
 	}
 }
 
@@ -539,22 +527,16 @@ if ( ! function_exists('url_title'))
  *
  * @access	public
  * @param	string	the URL
- * @param	string	the method: location or refresh
+ * @param	string	the method: location or redirect
  * @return	string
  */
 if ( ! function_exists('redirect'))
 {
-	function redirect($uri = '', $method = 'auto', $http_response_code = 302)
+	function redirect($uri = '', $method = 'location', $http_response_code = 302)
 	{
 		if ( ! preg_match('#^https?://#i', $uri))
 		{
 			$uri = site_url($uri);
-		}
-
-		// IIS environment likely? Use 'refresh' for better compatibility
-		if (DIRECTORY_SEPARATOR != '/' && $method == 'auto')
-		{
-			$method = 'refresh';
 		}
 
 		switch($method)

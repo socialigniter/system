@@ -4,22 +4,10 @@
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
- * NOTICE OF LICENSE
- * 
- * Licensed under the Open Software License version 3.0
- * 
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world wide web, please send an email to
- * licensing@ellislab.com so we can send you a copy immediately.
- *
  * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc. (http://ellislab.com/)
- * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @author		ExpressionEngine Dev Team
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
@@ -33,7 +21,7 @@
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Pagination
- * @author		EllisLab Dev Team
+ * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/pagination.html
  */
 class CI_Pagination {
@@ -142,7 +130,14 @@ class CI_Pagination {
 		}
 
 		// Set the base page index for starting page number
-		$base_page = ($this->use_page_numbers) ? 1 : 0;
+		if ($this->use_page_numbers)
+		{
+			$base_page = 1;
+		}
+		else
+		{
+			$base_page = 0;
+		}
 
 		// Determine the current page number.
 		$CI =& get_instance();
@@ -239,9 +234,16 @@ class CI_Pagination {
 		// Render the "previous" link
 		if  ($this->prev_link !== FALSE AND $this->cur_page != 1)
 		{
-			$i = ($this->use_page_numbers) ? $uri_page_number - 1 : $uri_page_number - $this->per_page;
+			if ($this->use_page_numbers)
+			{
+				$i = $uri_page_number - 1;
+			}
+			else
+			{
+				$i = $uri_page_number - $this->per_page;
+			}
 
-			if (($i == 0 OR ($this->use_page_numbers && $i == 1)) AND $this->first_url != '')
+			if ($i == 0 && $this->first_url != '')
 			{
 				$output .= $this->prev_tag_open.'<a '.$this->anchor_class.'href="'.$this->first_url.'">'.$this->prev_link.'</a>'.$this->prev_tag_close;
 			}
@@ -259,7 +261,14 @@ class CI_Pagination {
 			// Write the digit links
 			for ($loop = $start -1; $loop <= $end; $loop++)
 			{
-				$i = ($this->use_page_numbers) ? $loop : ($loop * $this->per_page) - $this->per_page;
+				if ($this->use_page_numbers)
+				{
+					$i = $loop;
+				}
+				else
+				{
+					$i = ($loop * $this->per_page) - $this->per_page;
+				}
 
 				if ($i >= $base_page)
 				{
@@ -289,7 +298,14 @@ class CI_Pagination {
 		// Render the "next" link
 		if ($this->next_link !== FALSE AND $this->cur_page < $num_pages)
 		{
-			$i = ($this->use_page_numbers) ? $this->cur_page + 1 : $this->cur_page * $this->per_page;
+			if ($this->use_page_numbers)
+			{
+				$i = $this->cur_page + 1;
+			}
+			else
+			{
+				$i = ($this->cur_page * $this->per_page);
+			}
 
 			$output .= $this->next_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$this->prefix.$i.$this->suffix.'">'.$this->next_link.'</a>'.$this->next_tag_close;
 		}
@@ -297,8 +313,14 @@ class CI_Pagination {
 		// Render the "Last" link
 		if ($this->last_link !== FALSE AND ($this->cur_page + $this->num_links) < $num_pages)
 		{
-			$i = ($this->use_page_numbers) ? $num_pages : ($num_pages * $this->per_page) - $this->per_page;
-			
+			if ($this->use_page_numbers)
+			{
+				$i = $num_pages;
+			}
+			else
+			{
+				$i = (($num_pages * $this->per_page) - $this->per_page);
+			}
 			$output .= $this->last_tag_open.'<a '.$this->anchor_class.'href="'.$this->base_url.$this->prefix.$i.$this->suffix.'">'.$this->last_link.'</a>'.$this->last_tag_close;
 		}
 

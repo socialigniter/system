@@ -1,25 +1,13 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
  *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * NOTICE OF LICENSE
- * 
- * Licensed under the Open Software License version 3.0
- * 
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world wide web, please send an email to
- * licensing@ellislab.com so we can send you a copy immediately.
+ * An open source application development framework for PHP 4.3.2 or newer
  *
  * @package		CodeIgniter
- * @author		EllisLab Dev Team
+ * @author		ExpressionEngine Dev Team
  * @copyright	Copyright (c) 2006 - 2011 EllisLab, Inc.
- * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 2.0
  * @filesource	
@@ -33,7 +21,7 @@
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Core
- * @author		EllisLab Dev Team
+ * @author		ExpressionEngine Dev Team
  * @link		
  */
 
@@ -119,14 +107,7 @@ class CI_Cache_file extends CI_Driver {
 	 */
 	public function delete($id)
 	{
-		if (file_exists($this->_cache_path.$id))
-		{
-			return unlink($this->_cache_path.$id);
-		}
-		else
-		{
-			return FALSE;
-		}
+		return unlink($this->_cache_path.$id);
 	}
 
 	// ------------------------------------------------------------------------
@@ -176,16 +157,17 @@ class CI_Cache_file extends CI_Driver {
 		
 		if (is_array($data))
 		{
+			$data = $data['data'];
 			$mtime = filemtime($this->_cache_path.$id);
 
-			if ( ! isset($data['data']['ttl']))
+			if ( ! isset($data['ttl']))
 			{
 				return FALSE;
 			}
 
 			return array(
-				'expire' => $mtime + $data['data']['ttl'],
-				'mtime'	 => $mtime
+				'expire' 	=> $mtime + $data['ttl'],
+				'mtime'		=> $mtime
 			);
 		}
 		

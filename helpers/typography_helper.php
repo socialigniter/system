@@ -4,22 +4,10 @@
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
- * NOTICE OF LICENSE
- * 
- * Licensed under the Open Software License version 3.0
- * 
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world wide web, please send an email to
- * licensing@ellislab.com so we can send you a copy immediately.
- *
  * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc. (http://ellislab.com/)
- * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @author		ExpressionEngine Dev Team
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
@@ -33,7 +21,7 @@
  * @package		CodeIgniter
  * @subpackage	Helpers
  * @category	Helpers
- * @author		EllisLab Dev Team
+ * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/helpers/typography_helper.html
  */
 
@@ -51,7 +39,9 @@ if ( ! function_exists('nl2br_except_pre'))
 	function nl2br_except_pre($str)
 	{
 		$CI =& get_instance();
+
 		$CI->load->library('typography');
+
 		return $CI->typography->nl2br_except_pre($str);
 	}
 }
@@ -88,12 +78,11 @@ if ( ! function_exists('auto_typography'))
  *
  * @access	public
  * @param	string
- * @param   string
  * @return	string
  */
 if ( ! function_exists('entity_decode'))
 {
-	function entity_decode($str, $charset = NULL)
+	function entity_decode($str, $charset='UTF-8')
 	{
 		global $SEC;
 		return $SEC->entity_decode($str, $charset);

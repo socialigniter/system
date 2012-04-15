@@ -4,22 +4,10 @@
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
- * NOTICE OF LICENSE
- * 
- * Licensed under the Open Software License version 3.0
- * 
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world wide web, please send an email to
- * licensing@ellislab.com so we can send you a copy immediately.
- *
  * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc. (http://ellislab.com/)
- * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @author		ExpressionEngine Dev Team
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
@@ -35,7 +23,7 @@
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Libraries
- * @author		EllisLab Dev Team
+ * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/email.html
  */
 class CI_Email {
@@ -151,7 +139,6 @@ class CI_Email {
 	 * Initialize the Email Data
 	 *
 	 * @access	public
-	 * @param	bool
 	 * @return	void
 	 */
 	public function clear($clear_attachments = FALSE)
@@ -478,7 +465,7 @@ class CI_Email {
 	 */
 	public function set_alt_message($str = '')
 	{
-		$this->alt_message = (string) $str;
+		$this->alt_message = $str;
 		return $this;
 	}
 
@@ -503,12 +490,12 @@ class CI_Email {
 	 * Set Wordwrap
 	 *
 	 * @access	public
-	 * @param	bool
+	 * @param	string
 	 * @return	void
 	 */
 	public function set_wordwrap($wordwrap = TRUE)
 	{
-		$this->wordwrap = (bool) $wordwrap;
+		$this->wordwrap = ($wordwrap === FALSE) ? FALSE : TRUE;
 		return $this;
 	}
 
@@ -1693,12 +1680,8 @@ class CI_Email {
 	protected function _smtp_connect()
 	{
 		$ssl = NULL;
-
 		if ($this->smtp_crypto == 'ssl')
-		{
 			$ssl = 'ssl://';
-		}
-
 		$this->_smtp_connect = fsockopen($ssl.$this->smtp_host,
 										$this->smtp_port,
 										$errno,
@@ -1717,13 +1700,7 @@ class CI_Email {
 		{
 			$this->_send_command('hello');
 			$this->_send_command('starttls');
-			$crypto = stream_socket_enable_crypto($this->_smtp_connect, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
-
-			if ($crypto !== TRUE)
-			{
-				$this->_set_error_message('lang:email_smtp_error', $this->_get_smtp_data());
-				return FALSE;
-			}
+			stream_socket_enable_crypto($this->_smtp_connect, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 		}
 
 		return $this->_send_command('hello');
@@ -1866,7 +1843,7 @@ class CI_Email {
 	 */
 	protected function _send_data($data)
 	{
-		if ( ! fwrite($this->_smtp_connect, $data . "\r\n"))
+		if ( ! fwrite($this->_smtp_connect, $data . $this->newline))
 		{
 			$this->_set_error_message('lang:email_smtp_data_failure', $data);
 			return FALSE;

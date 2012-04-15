@@ -4,22 +4,10 @@
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
- * NOTICE OF LICENSE
- * 
- * Licensed under the Open Software License version 3.0
- * 
- * This source file is subject to the Open Software License (OSL 3.0) that is
- * bundled with this package in the files license.txt / license.rst.  It is
- * also available through the world wide web at this URL:
- * http://opensource.org/licenses/OSL-3.0
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world wide web, please send an email to
- * licensing@ellislab.com so we can send you a copy immediately.
- *
  * @package		CodeIgniter
- * @author		EllisLab Dev Team
- * @copyright   Copyright (c) 2008 - 2011, EllisLab, Inc. (http://ellislab.com/)
- * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * @author		ExpressionEngine Dev Team
+ * @copyright   Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
@@ -37,7 +25,7 @@
  * @package		CodeIgniter
  * @subpackage  Drivers
  * @category	Database
- * @author		EllisLab Dev Team
+ * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
 
@@ -148,7 +136,7 @@ class CI_DB_oci8_driver extends CI_DB {
 	 */
 	public function db_set_charset($charset, $collation)
 	{
-		// this is done upon connect
+		// @todo - add support if needed
 		return TRUE;
 	}
 
@@ -416,7 +404,6 @@ class CI_DB_oci8_driver extends CI_DB {
 		}
 
 		$str = remove_invisible_characters($str);
-		$str = str_replace("'", "''", $str);
 
 		// escape LIKE condition wildcards
 		if ($like === TRUE)
