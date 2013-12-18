@@ -1843,7 +1843,7 @@ class CI_Email {
 	 */
 	protected function _send_data($data)
 	{
-		if ( ! fwrite($this->_smtp_connect, $data . "\r\n"))
+		if ( ! fwrite($this->_smtp_connect, $data . $this->newline))
 		{
 			$this->_set_error_message('lang:email_smtp_data_failure', $data);
 			return FALSE;
@@ -1954,7 +1954,7 @@ class CI_Email {
 			}
 		}
 
-		$msg .= "<pre>".$this->_header_str."\n".htmlspecialchars($this->_subject)."\n".htmlspecialchars($this->_finalbody).'</pre>';
+		$msg .= "<pre>".htmlspecialchars($this->_header_str)."\n".htmlspecialchars($this->_subject)."\n".htmlspecialchars($this->_finalbody).'</pre>';
 		return $msg;
 	}
 
